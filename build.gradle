@@ -95,8 +95,6 @@ publishing {
 signing {
     def signingKey = System.getenv('GPG_SIGNING_KEY') ?: findProperty('GPG_SIGNING_KEY')
     def signingKeyPassword = System.getenv('GPG_SIGNING_KEY_PASSWORD') ?: findProperty('GPG_SIGNING_KEY_PASSWORD')
-    println("Key: $signingKey")
-    println("KeyPwd: $signingKeyPassword")
     useInMemoryPgpKeys(signingKey, signingKeyPassword)
     sign publishing.publications.mavenJava
 }
