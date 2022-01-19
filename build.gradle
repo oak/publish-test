@@ -1,10 +1,11 @@
 plugins {
-	id 'java'
+    id 'java-library'
+    id 'signing'
     id 'maven-publish'
 }
 
-group = 'dev.oak3.demo'
-version = '0.0.1-SNAPSHOT'
+group = 'io.github.oak.test'
+version = '0.0.3-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
@@ -14,25 +15,88 @@ repositories {
 dependencies {
 }
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 test {
 	useJUnitPlatform()
-}
+} 
 
 
 publishing {
-  repositories {
-    maven {
-      name = "GitHubPackages"
-      url = "https://maven.pkg.github.com/oak/publish-test"
-      credentials {
-        username = System.getenv("GITHUB_ACTOR")
-        password = System.getenv("GITHUB_TOKEN")
-      }
+    repositories {
+        maven {
+            name = 'OSSRH'
+            def releasesRepoUrl = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+            def snapshotsRepoUrl = 'https://s01.oss.sonatype.org/content/repositories/snapshots/'
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = System.getenv('MAVEN_USERNAME')
+                password = System.getenv('MAVEN_PASSWORD')
+            }
+        }
+        maven {
+            name = 'GitHubPackages'
+            url = 'https://maven.pkg.github.com/oak/publish-test'
+            credentials {
+                username = System.getenv('GITHUB_ACTOR')
+                password = System.getenv('GITHUB_TOKEN')
+            }
+        }
     }
-  }
-  publications {      
-    gpr(MavenPublication) {
-        from(components.java)
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = 'publish-test'
+            from components.java
+            pom {
+                name = 'Publish test project'
+                packaging = 'jar'
+                description = 'Testing deploy of artifacts'
+                url = 'https://github.com/oak/publish-test'
+
+                scm {
+                    connection = 'scm:git:https://github.com/oak/publish-test.git'
+                    developerConnection = 'git@github.com:oak/publish-test.git'
+                    url = 'https://github.com/oak/publish-test'
+                }
+
+                issueManagement {
+                    system = 'GitHub'
+                    url = 'https://github.com/oak/publish-test/issues'
+                }
+
+                ciManagement {
+                    system = 'Github Actions'
+                    url = 'https://github.com/oak/publish-test/actions'
+                }
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'oak'
+                        name = 'Alexandre Carvalho'
+                        email = 'adcarvalho@gmail.com'
+                    }
+                }
+            }
+        }
     }
-  }
+}
+
+// Reference at https://docs.gradle.org/current/userguide/signing_plugin.html#sec:in-memory-keys
+signing {
+    def signingKey = System.getenv('GPG_SIGNING_KEY') ?: findProperty('GPG_SIGNING_KEY')
+    def signingKeyPassword = System.getenv('GPG_SIGNING_KEY_PASSWORD') ?: findProperty('GPG_SIGNING_KEY_PASSWORD')
+    println("Key: $signingKey")
+    println("KeyPwd: $signingKeyPassword")
+    useInMemoryPgpKeys(signingKey, signingKeyPassword)
+    sign publishing.publications.mavenJava
 }
