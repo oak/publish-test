@@ -46,7 +46,6 @@ jobs:
         clean: true
         folder: build/reports/tests
         target-folder: docs/latest/junit
-      if: ${{ github.event.inputs.tag == '' }}
       continue-on-error: true
 
     - name: Deploy jacoco report to GitHub Pages (latest)
@@ -56,7 +55,6 @@ jobs:
         clean: true
         folder: build/reports/jacoco
         target-folder: docs/latest/jacoco
-      if: ${{ github.event.inputs.tag == '' }}
       continue-on-error: true
 
     - name: Deploy javadocs to GitHub Pages (latest)
@@ -66,35 +64,4 @@ jobs:
         clean: true
         folder: build/docs/javadoc
         target-folder: docs/latest/javadoc
-      if: ${{ github.event.inputs.tag == '' }}
-      continue-on-error: true
-
-    - name: Deploy tests results to GitHub Pages (project version)
-      uses: JamesIves/github-pages-deploy-action@v4.2.2
-      with:
-        branch: gh-pages
-        clean: true
-        folder: build/reports/tests
-        target-folder: docs/${{ env.PROJECT_VERSION }}/junit
-      if: ${{ github.event.inputs.tag != '' }}
-      continue-on-error: true
-
-    - name: Deploy jacoco report to GitHub Pages (project version)
-      uses: JamesIves/github-pages-deploy-action@v4.2.2
-      with:
-        branch: gh-pages
-        clean: true
-        folder: build/reports/jacoco
-        target-folder: docs/${{ env.PROJECT_VERSION }}/jacoco
-      if: ${{ github.event.inputs.tag != '' }}
-      continue-on-error: true
-
-    - name: Deploy to GitHub Pages (project version)
-      uses: JamesIves/github-pages-deploy-action@v4.2.2
-      with:
-        branch: gh-pages
-        clean: true
-        folder: build/docs/javadoc
-        target-folder: docs/${{ env.PROJECT_VERSION }}/javadoc
-      if: ${{ github.event.inputs.tag != '' }}
       continue-on-error: true
