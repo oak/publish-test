@@ -1,4 +1,4 @@
-name: Generate and Publish project docs to GitHub Pages (latest)
+name: Generate project docs and publish to GitHub Pages (latest)
 
 on:
   workflow_run:
