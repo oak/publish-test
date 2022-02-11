@@ -1,4 +1,4 @@
-name: Generate project docs and publish to GitHub Pages (release)
+name: Generate release docs on GHP
 
 on:
   release:

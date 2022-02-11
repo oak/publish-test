@@ -1,4 +1,4 @@
-name: Generate project docs and publish to GitHub Pages (manual)
+name: Generate manually docs on GHP
 
 on:
   workflow_dispatch:
