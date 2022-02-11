@@ -1,13 +1,8 @@
-name: Generate and Publish project docs to GitHub Pages
+name: Generate and Publish project docs to GitHub Pages (release)
 
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Target tag to run'
-        required: false
-        default: '' 
-        type: text
+  release:
+    types: [published]
   
 jobs:
   generate-docs-reports:
@@ -16,8 +11,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-      with:
-        ref: ${{ github.event.inputs.tag }}
     
     - name: Set up JDK 11
       uses: actions/setup-java@v2
@@ -27,6 +20,7 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+      
     - name: Validate Gradle wrapper
       uses: gradle/wrapper-validation-action@v1
 
@@ -43,36 +37,6 @@ jobs:
       with:
         arguments: test
 
-    - name: Deploy tests results to GitHub Pages (latest)
-      uses: JamesIves/github-pages-deploy-action@v4.2.2
-      with:
-        branch: gh-pages
-        clean: true
-        folder: build/reports/tests
-        target-folder: docs/latest/junit
-      if: ${{ github.event.inputs.tag == '' }}
-      continue-on-error: true
-
-    - name: Deploy jacoco report to GitHub Pages (latest)
-      uses: JamesIves/github-pages-deploy-action@v4.2.2
-      with:
-        branch: gh-pages
-        clean: true
-        folder: build/reports/jacoco
-        target-folder: docs/latest/jacoco
-      if: ${{ github.event.inputs.tag == '' }}
-      continue-on-error: true
-
-    - name: Deploy javadocs to GitHub Pages (latest)
-      uses: JamesIves/github-pages-deploy-action@v4.2.2
-      with:
-        branch: gh-pages
-        clean: true
-        folder: build/docs/javadoc
-        target-folder: docs/latest/javadoc
-      if: ${{ github.event.inputs.tag == '' }}
-      continue-on-error: true
-
     - name: Deploy tests results to GitHub Pages (project version)
       uses: JamesIves/github-pages-deploy-action@v4.2.2
       with:
@@ -80,7 +44,6 @@ jobs:
         clean: true
         folder: build/reports/tests
         target-folder: docs/${{ env.PROJECT_VERSION }}/junit
-      if: ${{ github.event.inputs.tag != '' }}
       continue-on-error: true
 
     - name: Deploy jacoco report to GitHub Pages (project version)
@@ -90,7 +53,6 @@ jobs:
         clean: true
         folder: build/reports/jacoco
         target-folder: docs/${{ env.PROJECT_VERSION }}/jacoco
-      if: ${{ github.event.inputs.tag != '' }}
       continue-on-error: true
 
     - name: Deploy to GitHub Pages (project version)
@@ -100,5 +62,4 @@ jobs:
         clean: true
         folder: build/docs/javadoc
         target-folder: docs/${{ env.PROJECT_VERSION }}/javadoc
-      if: ${{ github.event.inputs.tag != '' }}
       continue-on-error: true
