@@ -1,0 +1,93 @@
+name: Generate and Publish project docs to GitHub Pages
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Target tag to run'
+        required: false
+        default: '' 
+        type: text
+  
+jobs:
+  generate-docs-reports:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        ref: ${{ github.event.inputs.tag }} 
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action@v1
+
+    - name: Export project version
+      run: echo "PROJECT_VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_ENV
+    
+    - name: Generate Javadoc
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: javadoc
+
+    - name: Run tests and generate reports
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: test
+
+    - name: Deploy tests results to GitHub Pages (latest)
+      uses: JamesIves/github-pages-deploy-action@v4.2.2
+      with:
+        branch: gh-pages
+        clean: true
+        folder: build/reports/tests
+        target-folder: docs/latest/junit
+
+    - name: Deploy jacoco report to GitHub Pages (latest)
+      uses: JamesIves/github-pages-deploy-action@v4.2.2
+      with:
+        branch: gh-pages
+        clean: true
+        folder: build/reports/jacoco
+        target-folder: docs/latest/jacoco
+
+    - name: Deploy javadocs to GitHub Pages (latest)
+      uses: JamesIves/github-pages-deploy-action@v4.2.2
+      with:
+        branch: gh-pages
+        clean: true
+        folder: build/docs/javadoc
+        target-folder: docs/latest/javadoc
+
+    - name: Deploy tests results to GitHub Pages (project version)
+      uses: JamesIves/github-pages-deploy-action@v4.2.2
+      with:
+        branch: gh-pages
+        clean: true
+        folder: build/reports/tests
+        target-folder: docs/${{ env.PROJECT_VERSION }}/junit
+
+    - name: Deploy jacoco report to GitHub Pages (project version)
+      uses: JamesIves/github-pages-deploy-action@v4.2.2
+      with:
+        branch: gh-pages
+        clean: true
+        folder: build/reports/jacoco
+        target-folder: docs/${{ env.PROJECT_VERSION }}/jacoco
+
+    - name: Deploy to GitHub Pages (project version)
+      uses: JamesIves/github-pages-deploy-action@v4.2.2
+      with:
+        branch: gh-pages
+        clean: true
+        folder: build/docs/javadoc
+        target-folder: docs/${{ env.PROJECT_VERSION }}/javadoc
