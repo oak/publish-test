@@ -1,4 +1,4 @@
-name: Generate manually docs on GHP
+name: generate-manually-docs-on-ghp
 
 on:
   workflow_dispatch:

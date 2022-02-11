@@ -1,4 +1,4 @@
-name: Generate release docs on GHP
+name: generate-release-docs-on-ghp
 
 on:
   release:

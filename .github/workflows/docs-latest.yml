@@ -1,9 +1,11 @@
-name: Generate latest docs on GHP
+name: generate-latest-docs-on-ghp
 
 on:
   workflow_run:
-    workflows: ["Java CI with Gradle"]
-    branches: [main]
+    workflows: 
+      - java-ci-gradle
+    branches: 
+      - main
     types: 
       - completed
   
