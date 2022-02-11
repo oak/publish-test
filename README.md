@@ -1,6 +1,5 @@
----
-layout: home
----
 # GitHub Packages Publish Test
 
-The title says it all...
+Playground for learning Gradle publishing, github pages, jacoco, javadoc, junit test summary, etc...
+
+This project uses Gradle, checkout Maven version [here](https://oak.github.io/publish-test-maven/).
