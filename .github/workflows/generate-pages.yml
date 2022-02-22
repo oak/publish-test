@@ -4,6 +4,8 @@ on:
   workflow_run:
     workflows:
       - generate-latest-docs-on-ghp
+      - generate-manually-docs-on-ghp
+      - generate-release-docs-on-ghp
     branches:
       - main
     types:
