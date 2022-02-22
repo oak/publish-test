@@ -1,0 +1,11 @@
+# Configurations
+title:            Publish Test
+longtitle:        Publish Test
+author:           Alexandre Carvalho
+email:            adcarvalho@gmail.com
+description: >
+  Testing publish test site.
+
+baseurl: '/publish-test'
+
+remote_theme: oak/architect
