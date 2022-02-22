@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"dev.oak3.demo.publishtest","c":"HelloWorldService","l":"HelloWorldService()","url":"%3Cinit%3E()"},{"p":"dev.oak3.demo.publishtest","c":"HelloWorldService","l":"sayHelloTo(String)","url":"sayHelloTo(java.lang.String)"},{"p":"dev.oak3.demo.publishtest","c":"HelloWorldService","l":"sayHelloWorld()"}]
