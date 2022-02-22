@@ -17,8 +17,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-      with:
-        ref: ${{ github.event.inputs.tag }}
     
     - name: Set up JDK 11
       uses: actions/setup-java@v2
@@ -48,6 +46,7 @@ jobs:
     - name: Deploy tests results to GitHub Pages (latest)
       uses: JamesIves/github-pages-deploy-action@v4.2.2
       with:
+        token: ${{ secrets.GH_WORKFLOW_PAT }}
         branch: gh-pages
         clean: true
         folder: build/reports/tests
@@ -58,6 +57,7 @@ jobs:
     - name: Deploy jacoco report to GitHub Pages (latest)
       uses: JamesIves/github-pages-deploy-action@v4.2.2
       with:
+        token: ${{ secrets.GH_WORKFLOW_PAT }}
         branch: gh-pages
         clean: true
         folder: build/reports/jacoco
@@ -68,6 +68,7 @@ jobs:
     - name: Deploy javadocs to GitHub Pages (latest)
       uses: JamesIves/github-pages-deploy-action@v4.2.2
       with:
+        token: ${{ secrets.GH_WORKFLOW_PAT }}
         branch: gh-pages
         clean: true
         folder: build/docs/javadoc
@@ -78,6 +79,7 @@ jobs:
     - name: Deploy tests results to GitHub Pages (project version)
       uses: JamesIves/github-pages-deploy-action@v4.2.2
       with:
+        token: ${{ secrets.GH_WORKFLOW_PAT }}
         branch: gh-pages
         clean: true
         folder: build/reports/tests
@@ -88,6 +90,7 @@ jobs:
     - name: Deploy jacoco report to GitHub Pages (project version)
       uses: JamesIves/github-pages-deploy-action@v4.2.2
       with:
+        token: ${{ secrets.GH_WORKFLOW_PAT }}
         branch: gh-pages
         clean: true
         folder: build/reports/jacoco
@@ -98,6 +101,7 @@ jobs:
     - name: Deploy to GitHub Pages (project version)
       uses: JamesIves/github-pages-deploy-action@v4.2.2
       with:
+        token: ${{ secrets.GH_WORKFLOW_PAT }}
         branch: gh-pages
         clean: true
         folder: build/docs/javadoc
