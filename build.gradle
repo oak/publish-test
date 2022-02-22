@@ -9,7 +9,7 @@ plugins {
 }
 
 group = 'io.github.oak.test'
-version = '0.0.5-SNAPSHOT'
+version = '0.0.6-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
