@@ -45,7 +45,6 @@ jobs:
       with:
         branch: gh-pages
         clean: true
-        single-commit: true
         folder: build/reports/tests
         target-folder: docs/latest/junit
       continue-on-error: true
@@ -55,7 +54,6 @@ jobs:
       with:
         branch: gh-pages
         clean: true
-        single-commit: true
         folder: build/reports/jacoco
         target-folder: docs/latest/jacoco
       continue-on-error: true
@@ -65,7 +63,6 @@ jobs:
       with:
         branch: gh-pages
         clean: true
-        single-commit: true
         folder: build/docs/javadoc
         target-folder: docs/latest/javadoc
       continue-on-error: true
