@@ -1,6 +1,6 @@
 ---
 title: Javadoc
-author: {% site.author %}
+author: {{site.author}}
 menu_item: true
 menu_title: Javadoc
 category: docs
@@ -11,5 +11,5 @@ order: 2
 
 # Javadocs
 {% for version in site.data.versions %}
-- [{{version.version}}](versions/javadoc-{{version.version}}.html)
+- [{{version.version}}](pages/versions/javadoc-{{version.version}}.html)
 {% endfor %}
