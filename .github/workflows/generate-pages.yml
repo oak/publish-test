@@ -23,7 +23,7 @@ jobs:
           ref: gh-pages
 
       - name: Generate pages from present docs folders and templates
-        run: bash ./generate-pages/generate-pages.sh
+        run: bash .generate-pages/generate-pages.sh
         env:
           MASTER_BRANCH_NAME: main
           SOURCE_INDEX_FILE: README.md
