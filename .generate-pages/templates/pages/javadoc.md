@@ -11,5 +11,5 @@ order: 2
 
 # Javadocs
 {% for version in site.data.versions %}
-- [{{version.version}}](pages/versions/javadoc-{{version.version}}.html)
+- [{{version.version}}](versions/javadoc-{{version.version}}.html)
 {% endfor %}
