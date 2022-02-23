@@ -1,6 +1,6 @@
 ---
 title: Javadoc
-author: {{site.author}}
+author: {% site.author %}
 menu_item: true
 menu_title: Javadoc
 category: docs

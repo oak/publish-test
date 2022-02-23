@@ -1,6 +1,6 @@
 ---
 title: Tests Summary
-author: {{site.author}}
+author: {% site.author %}
 menu_item: true
 menu_title: Tests
 category: reports
