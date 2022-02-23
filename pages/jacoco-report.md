@@ -1,6 +1,6 @@
 ---
 title: Jacoco Report
-author: {{site.author}}
+author: {% site.author %}
 menu_item: true
 menu_title: Jacoco
 category: reports
